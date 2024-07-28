@@ -2,6 +2,7 @@
 import { getUserData } from "@/actions/auth";
 import { Homepage } from "@/components/component/homepage";
 import { Landingpage } from "@/components/component/landingpage";
+import Navbar from "@/components/component/navbar";
 // import { useRouter } from "next/navigation";
 
 export default async function Home() {
@@ -11,10 +12,10 @@ export default async function Home() {
   console.log(session)
 
   return (
-    <>
-
-    <Homepage user={session}/>
+    <div className=" overflow-hidden">
+      <Navbar/>
+      <Homepage user={session}/>
     {/* <Landingpage userData={session}/> */}
-    </>
+    </div>
   );
 }

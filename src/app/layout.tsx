@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import AuthContextProvider from "@/context/AuthContext";
-import ProtectedRoute from "@/Providers/ProtectedRoute";
 
 const inter = Inter({ subsets: ["latin"] });
 const popins= Poppins({subsets:['latin'],weight:['100','200','300','400','500','600','700','800']})

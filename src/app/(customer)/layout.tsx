@@ -1,3 +1,4 @@
+import Navbar from "@/components/component/navbar"
 import { ReactNode } from "react"
 
 
@@ -7,6 +8,9 @@ interface layoutProps{
 
 export default function layout({children}:layoutProps ){
     return(
-        <div className=''>{children}</div>
+        <div className=' overflow-hidden'>
+            <Navbar/>
+            {children}
+        </div>
     )
 }

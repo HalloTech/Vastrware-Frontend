@@ -34,97 +34,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import LogoutBtn from "../functional/LogoutBtn"
 import {dummyProducts} from '@/dummy/products'
 import ToggleMenuBtn from "../functional/ToggleMenuBtn"
+import { UserRound } from "lucide-react"
+import ProductCard from "../functional/ProductCard"
 
 export function Homepage({user}:{user:any}) {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden ">
-      <header className="bg-primary text-primary-foreground py-4 px-6 flex flex-col justify-center items-center gap-4 w-full ">
-        <div className="flex items-center justify-between w-full">
-          <Link href="#" className="flex items-center gap-2" prefetch={false}>
-            <MountainIcon className="h-6 w-6" />
-            <span className="text-lg font-bold">VastrWare</span>
-          </Link>
-
-          <div className="relative md:block flex-1 max-w-lg mx-6 w-full hidden">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search products..."
-              className="pl-10 pr-4 py-2 rounded-md bg-primary-foreground text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-          
-          <nav className="hidden md:flex justify-end  items-center gap-6">
-            <Link href="#" className="hover:underline" prefetch={false}>
-              Categories
-            </Link>
-            <Link href="#" className="hover:underline" prefetch={false}>
-              About
-            </Link>
-            <Link href="#" className="hover:underline" prefetch={false}>
-              Contact
-            </Link>
-            {user &&<Link href="#" className="flex items-center gap-2 hover:underline" prefetch={false}>
-              <ShoppingCartIcon className="h-5 w-5" />
-              Cart
-            </Link>}
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src="/placeholder-user.jpg" />
-                      <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    <span className="sr-only">Toggle user menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>
-                    <Link href="#" className="flex items-center gap-2" prefetch={false}>
-                      <div className="h-4 w-4" />
-                      <span>Profile</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="#" className="flex items-center gap-2" prefetch={false}>
-                      <div className="h-4 w-4" />
-                      <span>Settings</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <LogoutBtn/>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <div className="flex gap-2">
-                <Link href="/auth" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-                  Login
-                </Link>
-                {/* <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-                  Register
-                </Link> */}
-              </div>
-            )}
-          </nav>
-
-          <div className=" ">
-            <ToggleMenuBtn user={user}/>
-          </div>
-        </div>
-
-        <div className="relative flex-1  mx-6 w-full md:hidden">
-          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search products..."
-            className="pl-10 pr-4 py-2 rounded-md bg-primary-foreground text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
-        
-      </header>
+      
       
       <main className="flex-1">
         <Carousel className="w-full max-w-6xl mx-auto">
@@ -184,24 +100,7 @@ export function Homepage({user}:{user:any}) {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dummyProducts.slice(0,10).map((product,ind)=>{
                 return(
-                  <Card key={product.id}>
-                    <img
-                      // src="/placeholder.svg"
-                      src={product.image}
-                      width={300}
-                      height={300}
-                      alt="Product Image"
-                      className="rounded-t-md object-contain w-full aspect-square"
-                    />
-                    <CardContent className="p-4">
-                      <h3 className="text-lg font-semibold mb-2 overflow-hidden" style={{display:'-webkit-box',lineClamp:1,'WebkitLineClamp':1,'WebkitBoxOrient':'vertical'}}>{product.title}</h3>
-                      <p className="text-muted-foreground mb-4 overflow-hidden " style={{display:'-webkit-box',lineClamp:3,'WebkitLineClamp':3,'WebkitBoxOrient':'vertical'}}>{product.description}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-lg">{product.price}</span>
-                        <Button>Add to Cart</Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <ProductCard product={product}/>
                 )
               })}
               

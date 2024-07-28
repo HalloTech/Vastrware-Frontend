@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
  
 export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get('token')?.value
-  const unprotectedRoutes=['/auth','/']
+  const unprotectedRoutes=['/auth','/','/about','/contact']
 
   // console.log(currentUser,request.nextUrl.pathname)
  
