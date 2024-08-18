@@ -100,9 +100,9 @@ export function Customers() {
       })
   }, [search, sortBy, sortOrder, filters])
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-6 p-6 w-full ">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Customers</h1>
+        {/* <h1 className="text-2xl font-bold ">Customers</h1> */}
         <div className="flex items-center gap-4">
           <Input
             type="search"

@@ -23,22 +23,16 @@ To read more about using these font, please visit the Next.js documentation:
 - App Directory: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
 **/
-"use client"
+// "use client"
 
-import { useState, useMemo, AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, JSX, SVGProps } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
+import { JSX, SVGProps } from "react"
+import { getProductsByCategoryAndQuery } from "@/actions/product"
+import {  productDataGetting } from "@/types/product"
+import ProductCard from "../functional/ProductCard"
+import FunctionalPagination from "../functional/FunctionalPagination"
 
-export function Productpage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filters, setFilters] = useState({
-    category: [],
-    priceRange: [0, 100],
-    rating: 0,
-  })
+export async function SearchPage({category,query,page}:{category:string,query:string,page:number}) {
+  console.log(42,category,query,page)
   const products = [
     {
       id: 1,
@@ -105,237 +99,32 @@ export function Productpage() {
       category: "Home",
     },
   ]
-  // const filteredProducts = useMemo(() => {
-  //   return products.filter((product:any) => {
-  //     const { category, priceRange, rating } = filters
-  //     return (
-  //       product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-  //       (category.length === 0 || category.includes(product.category)) &&
-  //       product.price >= priceRange[0] &&
-  //       product.price <= priceRange[1] &&
-  //       product.rating >= rating
-  //     )
-  //   })
-  // }, [searchTerm, filters])
-  const handleAddToCart = (product: any) => {
-    console.log("Added to cart:", product)
-  }
+
+  const queryProducts:productDataGetting=await getProductsByCategoryAndQuery({limit:6,page:page,query:query,category})
+
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4 md:p-6">
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
-        <div className="flex items-center gap-4 mb-6">
-          <Input
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1"
-          />
-          <Button>Search</Button>
-        </div>
-      </div>
-      {/* <div className="col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1"> */}
-        {/* <Accordion type="single" collapsible>
-          <AccordionItem value="category">
-            <AccordionTrigger className="text-base">Category</AccordionTrigger>
-            <AccordionContent>
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Electronics")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Electronics")
-                          ? filters.category.filter((c) => c !== "Electronics")
-                          : [...filters.category, "Electronics"],
-                      })
-                    }}
-                  />
-                  Electronics
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Bags")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Bags")
-                          ? filters.category.filter((c) => c !== "Bags")
-                          : [...filters.category, "Bags"],
-                      })
-                    }}
-                  />
-                  Bags
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Outdoors")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Outdoors")
-                          ? filters.category.filter((c) => c !== "Outdoors")
-                          : [...filters.category, "Outdoors"],
-                      })
-                    }}
-                  />
-                  Outdoors
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Accessories")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Accessories")
-                          ? filters.category.filter((c) => c !== "Accessories")
-                          : [...filters.category, "Accessories"],
-                      })
-                    }}
-                  />
-                  Accessories
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Furniture")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Furniture")
-                          ? filters.category.filter((c) => c !== "Furniture")
-                          : [...filters.category, "Furniture"],
-                      })
-                    }}
-                  />
-                  Furniture
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Wearables")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Wearables")
-                          ? filters.category.filter((c) => c !== "Wearables")
-                          : [...filters.category, "Wearables"],
-                      })
-                    }}
-                  />
-                  Wearables
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.category.includes("Home")}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        category: filters.category.includes("Home")
-                          ? filters.category.filter((c) => c !== "Home")
-                          : [...filters.category, "Home"],
-                      })
-                    }}
-                  />
-                  Home
-                </Label>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="price-range">
-            <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
-            <AccordionContent>
-              <div className="grid gap-4">
-                <div />
-                <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>${filters.priceRange[0]}</span>
-                  <span>${filters.priceRange[1]}</span>
+    <>
+      
+
+        <section className="bg-muted py-12 px-6 md:px-12">
+            <div className="max-w-[1500px] mx-auto">
+                <h2 className="text-2xl font-bold mb-6">Category: {category}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {
+                    queryProducts?.products?.map((product,ind)=>{
+                    return(
+                        <ProductCard key={product._id} product={product}/>
+                    )
+                    })
+                }
                 </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="rating">
-            <AccordionTrigger className="text-base">Rating</AccordionTrigger>
-            <AccordionContent>
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.rating >= 4}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        rating: filters.rating >= 4 ? 0 : 4,
-                      })
-                    }}
-                  />
-                  4 stars and above
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.rating >= 3}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        rating: filters.rating >= 3 ? 0 : 3,
-                      })
-                    }}
-                  />
-                  3 stars and above
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.rating >= 2}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        rating: filters.rating >= 2 ? 0 : 2,
-                      })
-                    }}
-                  />
-                  2 stars and above
-                </Label>
-                <Label className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    checked={filters.rating >= 1}
-                    onCheckedChange={() => {
-                      setFilters({
-                        ...filters,
-                        rating: filters.rating >= 1 ? 0 : 1,
-                      })
-                    }}
-                  />
-                  1 star and above
-                </Label>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion> */}
-      {/* </div> */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product: { id: Key | null | undefined; title: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined; price: number; rating: number }) => (
-            <div key={product.id} className="bg-background rounded-lg overflow-hidden shadow-lg">
-              <img
-                src="/placeholder.svg"
-                alt={'Product Image'}
-                width={400}
-                height={300}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">{product.title}</h3>
-                <p className="text-muted-foreground text-sm">${product.price.toFixed(2)}</p>
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <StarIcon className="w-4 h-4 fill-primary" />
-                  <span>{product.rating.toFixed(1)}</span>
-                </div>
-                <Button className="mt-4 w-full" onClick={() => handleAddToCart(product)}>
-                  Add to Cart
-                </Button>
-              </div>
+                <FunctionalPagination currentPage={queryProducts.currentPage} totalPages={queryProducts.totalPages} />
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+        </section>
+
+
+    </>
   )
 }
 

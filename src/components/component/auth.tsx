@@ -55,6 +55,7 @@ const {
         console.log(res)
         if(!res) throw Error('Unable to signup!')
         toast.success(res)
+        router.push('/')
     } catch (error:any) {
         toast.error(error)
     }

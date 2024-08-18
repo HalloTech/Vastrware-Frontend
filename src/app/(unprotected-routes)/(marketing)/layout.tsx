@@ -3,7 +3,6 @@ import Navbar from "@/components/component/navbar"
 import { redirect } from "next/navigation"
 import { ReactNode } from "react"
 
-
 interface layoutProps{
     children:ReactNode
 }

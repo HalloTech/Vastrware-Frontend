@@ -17,9 +17,10 @@ export default function CategorySelector({name}:CategorySelectorProps ){
             onClick={(e)=>{
                 const params = new URLSearchParams(searchParams);
                 params.set('category', name);
-                if(pathname=='/'){
-                    replace(`${pathname}search?${params.toString()}`);
-                }else{
+                params.set('page','1')
+                if(!pathname.includes('search')){
+                    replace(`/search?${params.toString()}`);
+                }else if(pathname.includes('search')){
                     replace(`${pathname}?${params.toString()}`);
                 }
             }} type="button">

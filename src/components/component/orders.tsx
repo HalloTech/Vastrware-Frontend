@@ -97,7 +97,7 @@ export function Orders() {
   }
   return (
     <div className="flex min-h-screen w-full">
-      <aside className="hidden w-64 flex-col border-r bg-background p-4 md:flex">
+      {/* <aside className="hidden w-64 flex-col border-r bg-background p-4 md:flex">
         <div className="mb-6">
           <Link href="#" className="flex items-center gap-2 font-semibold" prefetch={false}>
             <Package2Icon className="h-6 w-6" />
@@ -146,7 +146,7 @@ export function Orders() {
             <span>Analytics</span>
           </Link>
         </nav>
-      </aside>
+      </aside> */}
       <div className="flex flex-col flex-1">
         <header className="bg-background border-b px-6 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Orders</h1>
@@ -207,7 +207,7 @@ export function Orders() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <Table>
+          {/* <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="cursor-pointer" onClick={() => handleSort("orderNumber")}>
@@ -262,7 +262,7 @@ export function Orders() {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
+          </Table> */}
         </div>
       </div>
     </div>

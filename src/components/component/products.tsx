@@ -19,16 +19,19 @@ To read more about using these font, please visit the Next.js documentation:
 **/
 "use client"
 
-import { useState, useMemo, SetStateAction, JSX, SVGProps } from "react"
+import { useState, useMemo, SetStateAction, JSX, SVGProps, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { Label } from "@/components/ui/label"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
+import { useRouter } from "next/navigation"
+import { getProducts } from "@/actions/product"
 
 export function Products() {
   const [search, setSearch] = useState("")
+  const [allProducts,setAllProducts]=useState<any[]>([])
   const [filters, setFilters] = useState({
     category: [],
     price: { min: 0, max: Infinity },
@@ -78,6 +81,8 @@ export function Products() {
       stock: 75,
     },
   ]
+
+  const router=useRouter()
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const nameMatch = product.name.toLowerCase().includes(search.toLowerCase())
@@ -86,10 +91,19 @@ export function Products() {
       return nameMatch && priceMatch && stockMatch
     })
   }, [search, filters])
+
+  useEffect(()=>{
+    const fetchProducts=async ()=>{
+      const res=await getProducts({limit:10,page:1})
+      setAllProducts(res)
+    }
+
+    fetchProducts()
+  },[])
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex">
-        <aside className="bg-background border-r p-4 md:p-6 flex flex-col gap-4">
+    <div className="flex w-full ">
+      <div className="flex w-full">
+        {/* <aside className="bg-background border-r p-4 md:p-6 flex flex-col gap-4">
           <Link href="#" className="flex items-center gap-2" prefetch={false}>
             <HomeIcon className="w-5 h-5" />
             <span>Dashboard</span>
@@ -114,12 +128,12 @@ export function Products() {
             <SettingsIcon className="w-5 h-5" />
             <span>Settings</span>
           </Link>
-        </aside>
-        <div className="flex-1 flex flex-col">
-          <header className="bg-background p-4 md:p-6 flex items-center justify-between">
+        </aside> */}
+        <div className="flex-1 flex flex-col w-full">
+          {/* <header className="bg-background p-4 md:p-6 flex items-center justify-between w-full">
             <h1 className="text-2xl font-bold">Products</h1>
-            <Button size="sm">Create Product</Button>
-          </header>
+            
+          </header> */}
           <div className="flex-1 p-4 md:p-6 overflow-auto">
             <div className="bg-background rounded-lg shadow-sm overflow-hidden">
               <div className="p-4 md:p-6 border-b">
@@ -134,6 +148,7 @@ export function Products() {
                       onChange={handleSearch}
                     />
                   </div>
+                  
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm">
@@ -210,6 +225,8 @@ export function Products() {
                       </div>
                     </DropdownMenuContent>
                   </DropdownMenu>
+
+                  <Button onClick={()=>router.push('/products/create')} size="sm">Create Product</Button>
                 </div>
               </div>
               <Table>
@@ -245,6 +262,8 @@ export function Products() {
                   ))}
                 </TableBody>
               </Table>
+
+              {JSON.stringify(allProducts.length)}
             </div>
           </div>
         </div>

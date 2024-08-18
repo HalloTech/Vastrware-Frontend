@@ -1,9 +1,11 @@
+import CartPage from "@/components/component/cartpage";
+
 interface pageProps{
     
 }
 
 export default function page({}:pageProps ){
     return(
-        <div className=''>page</div>
+        <CartPage/>
     )
 }

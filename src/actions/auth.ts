@@ -12,7 +12,7 @@ export const decodeJWT=(jwt:string)=>{
 
 export async function signIn({email,password}:signInType){
     try {
-        const res=await fetch(`http://localhost:3002/api/users/login`,{
+        const res=await fetch(`http://localhost:3001/api/users/login`,{
             method:'POST',
             body:JSON.stringify({
                 email,password
@@ -30,7 +30,7 @@ export async function signIn({email,password}:signInType){
         // const user:any=decodeJWT(result.accessToken)
         // setUserData(user.user)
         const cookie=cookies()
-        cookie.set('token',result.accessToken)
+        cookie.set('token',result.accessToken,{httpOnly:true})
         return 'Login successfully!'
     } catch (error:any) {
         console.log(error.message)
@@ -40,7 +40,7 @@ export async function signIn({email,password}:signInType){
 
 export async function signUp({username,email,password}:signUpType){
     try {
-        const res=await fetch(`http://localhost:3002/api/users/signup`,{
+        const res=await fetch(`http://localhost:3001/api/users/signup`,{
             method:'POST',
             body:JSON.stringify({
                 username,email,password
@@ -57,7 +57,7 @@ export async function signUp({username,email,password}:signUpType){
         // setUserData(result)
         // localStorage.setItem('token',JSON.stringify(result))
         const cookie=cookies()
-        cookie.set('token',result.accessToken)
+        cookie.set('token',result.accessToken,{httpOnly:true})
         return 'Signup successfully!'
     } catch (error:any) {
         return error.message

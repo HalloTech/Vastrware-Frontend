@@ -36,18 +36,35 @@ import {dummyProducts} from '@/dummy/products'
 import ToggleMenuBtn from "../functional/ToggleMenuBtn"
 import { UserRound } from "lucide-react"
 import ProductCard from "../functional/ProductCard"
+import { getProducts } from "@/actions/product"
+import { productDataGetting } from "@/types/product"
+import LoadMoreProductsHome from "../functional/LoadMoreProductsHome"
 
-export function Homepage({user}:{user:any}) {
+export default async function Homepage({user}:{user:any}) {
+  const products:productDataGetting=await getProducts({limit:10,page:1})
+  console.log(products?.products)
+
+  const mostSellingProducts=products?.products?.filter((product,ind)=>{
+    return product.most_selling_product
+  })
+
+  const isCarousels=products?.products?.filter((product,ind)=>product.carousel)
+
+  console.log(isCarousels)
+
+  // console.log(products)
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden ">
-      
-      
       <main className="flex-1">
-        <Carousel className="w-full max-w-6xl mx-auto">
-          <CarouselContent>
-            <CarouselItem>
-              <div className="relative h-[400px] bg-[url('/placeholder.svg')] bg-cover bg-center flex items-center justify-center">
-                <div className="bg-primary/80 text-primary-foreground p-8 rounded-md text-center max-w-md">
+
+        {/* Carousel */}
+        <Carousel className=" w-full ">
+          <CarouselContent className="  ">
+            {Array(3).fill(0).map((item,ind)=>{
+            return (
+            <CarouselItem key={ind} className=" basis-full md:basis-1/3 pl-1">
+              <div className="relative min-h-[400px]  bg-[url('/placeholder.svg')] bg-cover bg-center flex items-center justify-center ">
+                <div className="bg-primary/80 text-primary-foreground p-8 rounded-md text-center max-w-sm">
                   <h1 className="text-3xl font-bold mb-4">Discover the Latest Trends</h1>
                   <p className="mb-6">Explore our curated collection of fashionable and high-quality products.</p>
                   <Link
@@ -60,45 +77,20 @@ export function Homepage({user}:{user:any}) {
                 </div>
               </div>
             </CarouselItem>
-            <CarouselItem>
-              <div className="relative h-[400px] bg-[url('/placeholder.svg')] bg-cover bg-center flex items-center justify-center">
-                <div className="bg-primary/80 text-primary-foreground p-8 rounded-md text-center max-w-md">
-                  <h1 className="text-3xl font-bold mb-4">Discover the Latest Trends</h1>
-                  <p className="mb-6">Explore our curated collection of fashionable and high-quality products.</p>
-                  <Link
-                    href="#"
-                    className="inline-flex items-center justify-center rounded-md bg-primary-foreground px-4 py-2 text-primary font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    prefetch={false}
-                  >
-                    Shop Now
-                  </Link>
-                </div>
-              </div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="relative h-[400px] bg-[url('/placeholder.svg')] bg-cover bg-center flex items-center justify-center">
-                <div className="bg-primary/80 text-primary-foreground p-8 rounded-md text-center max-w-md">
-                  <h1 className="text-3xl font-bold mb-4">Discover the Latest Trends</h1>
-                  <p className="mb-6">Explore our curated collection of fashionable and high-quality products.</p>
-                  <Link
-                    href="#"
-                    className="inline-flex items-center justify-center rounded-md bg-primary-foreground px-4 py-2 text-primary font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    prefetch={false}
-                  >
-                    Shop Now
-                  </Link>
-                </div>
-              </div>
-            </CarouselItem>
+            )
+            })}
           </CarouselContent>
-          <CarouselPrevious className=" absolute left-0"/>
-          <CarouselNext  className="absolute right-0"/>
+          <CarouselPrevious className=" absolute left-2"/>
+          <CarouselNext  className="absolute right-2"/>
         </Carousel>
+
+        {/* Most Selling Products */}
+        {mostSellingProducts?.length!=0 &&
         <section className="py-12 px-6 md:px-12">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Featured Products</h2>
+          <div className="max-w-[1500px] mx-auto">
+            <h2 className="text-2xl font-bold mb-6">Most Selling Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {dummyProducts.slice(0,10).map((product,ind)=>{
+              {mostSellingProducts?.map((product,ind)=>{
                 return(
                   <ProductCard product={product}/>
                 )
@@ -106,84 +98,27 @@ export function Homepage({user}:{user:any}) {
               
             </div>
           </div>
-        </section>
+        </section>}
+
+        {/* Page-1 Products */}
         <section className="bg-muted py-12 px-6 md:px-12">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-[1500px] mx-auto">
             <h2 className="text-2xl font-bold mb-6">New Arrivals</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              <Card>
-                <img
-                  src="/placeholder.svg"
-                  width={300}
-                  height={300}
-                  alt="Product Image"
-                  className="rounded-t-md object-cover w-full aspect-square"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">Product Name</h3>
-                  <p className="text-muted-foreground mb-4">Product Description</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-lg">$59.99</span>
-                    <Button>Add to Cart</Button>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <img
-                  src="/placeholder.svg"
-                  width={300}
-                  height={300}
-                  alt="Product Image"
-                  className="rounded-t-md object-cover w-full aspect-square"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">Product Name</h3>
-                  <p className="text-muted-foreground mb-4">Product Description</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-lg">$69.99</span>
-                    <Button>Add to Cart</Button>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <img
-                  src="/placeholder.svg"
-                  width={300}
-                  height={300}
-                  alt="Product Image"
-                  className="rounded-t-md object-cover w-full aspect-square"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">Product Name</h3>
-                  <p className="text-muted-foreground mb-4">Product Description</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-lg">$79.99</span>
-                    <Button>Add to Cart</Button>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <img
-                  src="/placeholder.svg"
-                  width={300}
-                  height={300}
-                  alt="Product Image"
-                  className="rounded-t-md object-cover w-full aspect-square"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">Product Name</h3>
-                  <p className="text-muted-foreground mb-4">Product Description</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-lg">$89.99</span>
-                    <Button>Add to Cart</Button>
-                  </div>
-                </CardContent>
-              </Card>
+              {
+                products?.products?.map((product,ind)=>{
+                  return(
+                    <ProductCard product={product}/>
+                  )
+                })
+              }
             </div>
           </div>
         </section>
+
+
         <section className="py-12 px-6 md:px-12">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-[1500px] mx-auto">
             <h2 className="text-2xl font-bold mb-6">Popular Categories</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
               <Link
@@ -237,9 +172,13 @@ export function Homepage({user}:{user:any}) {
             </div>
           </div>
         </section>
+
+        {/* Load More Content */}
+        <LoadMoreProductsHome/>
+
       </main>
       <footer className="bg-primary text-primary-foreground py-6 px-6">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between">
+        <div className="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center justify-between">
           <p className="text-sm">&copy; 2024 Acme Store. All rights reserved.</p>
           <nav className="flex items-center gap-4 mt-4 md:mt-0">
             <Link href="#" className="hover:underline" prefetch={false}>

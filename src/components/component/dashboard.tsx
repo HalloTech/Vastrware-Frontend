@@ -28,97 +28,33 @@ import { JSX, SVGProps } from "react"
 
 export function Dashboard() {
   return (
-    <div className="grid min-h-screen w-full grid-cols-[280px_1fr] overflow-hidden">
-      <div className="hidden border-r bg-muted/40 lg:block">
-        <div className="flex flex-col gap-2">
-          <div className="flex h-[60px] items-center px-6">
-            <Link href="#" className="flex items-center gap-2 font-semibold" prefetch={false}>
-              <Package2Icon className="h-6 w-6" />
-              <span className="">Acme Inc</span>
-            </Link>
-          </div>
-          <div className="flex-1">
-            <nav className="grid items-start px-4 text-sm font-medium">
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                prefetch={false}
-              >
-                <HomeIcon className="h-4 w-4" />
-                Dashboard
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg bg-primary px-3 py-2 text-primary-foreground transition-all hover:text-primary"
-                prefetch={false}
-              >
-                <ShoppingCartIcon className="h-4 w-4" />
-                Orders
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">12</Badge>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                prefetch={false}
-              >
-                <PackageIcon className="h-4 w-4" />
-                Products
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                prefetch={false}
-              >
-                <UsersIcon className="h-4 w-4" />
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                prefetch={false}
-              >
-                <LineChartIcon className="h-4 w-4" />
-                Analytics
-              </Link>
-            </nav>
-          </div>
+    <div className="grid min-h-screen w-full ">
+      <div className="flex flex-col w-full">
+        <div className="flex items-center gap-4 w-full px-6 pt-5" >
+          <form className="w-full">
+            <div className="relative">
+              <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input type="search" placeholder="Search..." className="pl-8  w-full" />
+            </div>
+          </form>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <img src="/placeholder.svg" width="32" height="32" className="rounded-full" alt="Avatar" />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-      </div>
-      <div className="flex flex-col">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-muted/40 px-6">
-          <Link href="#" className="lg:hidden" prefetch={false}>
-            <Package2Icon className="h-6 w-6" />
-            <span className="sr-only">Home</span>
-          </Link>
-          <div className="flex-1">
-            <h1 className="font-semibold text-lg">Dashboard</h1>
-          </div>
-          <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-            <form className="ml-auto flex-1 sm:flex-initial">
-              <div className="relative">
-                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search..." className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]" />
-              </div>
-            </form>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <img src="/placeholder.svg" width="32" height="32" className="rounded-full" alt="Avatar" />
-                  <span className="sr-only">Toggle user menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 w-full">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Card className="bg-primary text-primary-foreground">
               <CardHeader>
@@ -169,33 +105,33 @@ export function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <Card>
-            <CardHeader className="px-7">
+          <Card className=" w-full">
+            <CardHeader className="px-7 ">
               <CardTitle>Recent Orders</CardTitle>
               <CardDescription>View and manage your recent orders.</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Order</TableHead>
-                    <TableHead className="min-w-[150px]">Customer</TableHead>
-                    <TableHead className="hidden md:table-cell">Channel</TableHead>
+            <CardContent className=" w-full ">
+              <Table className=" w-full ">
+                <TableHeader className=" w-full">
+                  <TableRow className=" w-full flex justify-between items-center">
+                    <TableHead className=" max-md:w-[50px] md:w-16">Order</TableHead>
+                    <TableHead className=" max-md:w-[80px]">Customer</TableHead>
+                    <TableHead className="hidden md:table-cell ">Channel</TableHead>
                     <TableHead className="hidden md:table-cell">Date</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
+                    <TableHead className="text-right max-md:w-[60px]">Total</TableHead>
                     <TableHead className="hidden sm:table-cell">Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead className="text-right max-md:w-[70px]">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">#3210</TableCell>
-                    <TableCell>Olivia Martin</TableCell>
+                  <TableRow className=" w-full flex justify-between items-center">
+                    <TableCell className="font-medium max-md:w-[50px]">#3210</TableCell>
+                    <TableCell className=" max-md:w-[80px]">Olivia Martin</TableCell>
                     <TableCell className="hidden md:table-cell">Online Store</TableCell>
                     <TableCell className="hidden md:table-cell">February 20, 2022</TableCell>
-                    <TableCell className="text-right">$42.25</TableCell>
+                    <TableCell className="text-right max-md:w-[60px]">$42.25</TableCell>
                     <TableCell className="hidden sm:table-cell">Shipped</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right max-md:w-[70px]">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon">
@@ -210,7 +146,7 @@ export function Dashboard() {
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell className="font-medium">#3209</TableCell>
                     <TableCell>Ava Johnson</TableCell>
                     <TableCell className="hidden md:table-cell">Shop</TableCell>
@@ -330,7 +266,7 @@ export function Dashboard() {
                     <TableCell className="text-right">
                       <DropdownMenu />
                     </TableCell>
-                  </TableRow>
+                  </TableRow> */}
                 </TableBody>
               </Table>
             </CardContent>

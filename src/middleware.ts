@@ -1,6 +1,7 @@
 import type { NextRequest } from 'next/server'
  
 export function middleware(request: NextRequest) {
+  // console.log(request.nextUrl.pathname)
   const currentUser = request.cookies.get('token')?.value
   const unprotectedRoutes=['/auth','/','/about','/contact']
 
@@ -20,7 +21,8 @@ export function middleware(request: NextRequest) {
 }
  
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)',
+  matcher: [
+    '/((?!api|_next/static|_next/image|.*\\.png$).*)', //In this regex the regex itself saying it exclode certain routes. It is called negative lookahead assertion. So, that means anything other than this will be included in the matcher, thats why even when we are not including the following routes it is reading them.
     // '/auth','/','/dashboard','/customers','/products','/orders'
   ],
 }
